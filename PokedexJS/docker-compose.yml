@@ -6,4 +6,6 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "8000:80"
+    volumes:
+      - ./src/:/usr/local/apache2/htdocs/
     restart: always
