@@ -50,6 +50,7 @@ function changePage(page) {
         const h1 = document.createElement('h1')
         h1.className = "pokemon_title"
         const p = document.createElement('p')
+        p.className = ""
         const pImg = document.createElement('img')
     
         fetch(objJson[i].url)
@@ -67,8 +68,10 @@ function changePage(page) {
                 h1.textContent = capitaliseFirstLetter(pokeName)
     
                 //Set Pokemon's type
+                var types = []
                 var prettyTypes = ''
                 pokeData.types.forEach(function(t, idx, array) {
+                    types.push(t.type.name)
                     prettyTypes += capitaliseFirstLetter(t.type.name)
                     if (idx != array.length - 1) {
                         prettyTypes += ' / '
@@ -78,6 +81,10 @@ function changePage(page) {
     
                 //Set Pokemon's sprite
                 pImg.src = pokeData.sprites.front_default
+
+                //Set background type colours
+                console.log("TYPE COLOURS: " + types)
+                setTypeColours(types, h1)
             })
     
             // Append the cards to the container element
@@ -103,6 +110,26 @@ function changePage(page) {
 
 function numPages() {
     return Math.ceil(objJson.length / records_per_page);
+}
+
+function setTypeColours(types, h1) {
+    //Requires NodeJS to work - porting to React version
+    // var typeColours = [];
+    // const MongoClient = require('mongodb').MongoClient;
+    // const uri = "mongodb+srv://m001-student:m001-mongodb-basics@cluster0.imrmz.mongodb.net/pokedex?retryWrites=true&w=majority";
+    // const client = new MongoClient(uri, { useNewUrlParser: true });
+    // client.connect(err => {
+    //     const collection = client.db("pokedex").collection("types");
+    //     types.array.forEach(element => {
+    //        typeColours.push(collection.find({_id:element}, {type:1, _id:0})) 
+    //     });
+    //     console.log("DB COLOURS: " + typeColours)
+    //     if (typeColours.length == 1) {
+    //         typeColours.push(typeColours[0]);
+    //     }
+    //     h1.style.background = `linear-gradient(120deg, ${typeColours[0]}, ${typeColours[1]})`;
+    //     client.close();
+    // });
 }
 
 window.onload = function() {
